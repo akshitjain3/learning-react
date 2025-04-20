@@ -1,0 +1,118 @@
+.lightdarkCont {
+    width: 11rem;
+    height: 2rem;
+    border-radius: 999px;
+    top: 0.6rem;
+    right: 1rem;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    background-color: var(--component-bg);
+}
+
+.lightdarkCont p {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.lightdark-left, .lightdark-right {
+    width: 50%;
+    height: 100%;
+    padding-inline: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.lightdark-left {
+    background-color: #fff;
+    color: #000;
+}
+
+.lightdark-right {
+    background-color: #2d2d2d;
+    color: #fff;
+}
+.lightdark-left img{
+    aspect-ratio: 1;
+    height: 1.4rem;
+    margin-left: 0.5rem;
+}
+
+.lightdark-right img{
+    aspect-ratio: 1;
+    height: 1.3rem;
+    margin-right: 0.5rem;
+}
+
+.toggle-knob {
+    position: absolute;
+    top: 5px;
+    left: 12px;
+    aspect-ratio: 1;
+    height: 1.5rem;
+    background-color: #000;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: left 0.5s ease;
+    z-index: 1;
+  }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.lightdark-left.selected {
+    color: #000;
+    font-weight: 600;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.1);
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.lightdark-left.unselected :hover {
+    color: #000;
+    font-weight: 600;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.1);
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.lightdark-left.unselected {
+    color: #aaa;
+    font-weight: 400;
+}
+
+.lightdark-right.selected {
+    color: #fff;
+    font-weight: 600;
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 2px 8px rgba(255,255,255,0.1);
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.lightdark-right.unselected {
+    color: #777;
+    font-weight: 400;  
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 2px 8px rgba(255,255,255,0.1);
+}
+
+.lightdark-right.unselected :hover {
+    color: #fff;
+    font-weight: 600;
+    box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 2px 8px rgba(255,255,255,0.1);
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.selected p{
+    font-size: 1rem;
+}
+  
+  
+
+
+
+

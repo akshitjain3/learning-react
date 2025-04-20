@@ -1,0 +1,79 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="light"] {
+  --page-bg: #ebe4ff;
+  --page-bg-rgb: 235, 228, 255;
+
+  --component-bg: #ffffff;
+  --component-bg-rgb: 255, 255, 255;
+
+  --component-bg2: antiquewhite;
+  --component-bg2-rgb: 250, 235, 215;
+
+  --headings: #823bff;
+  --headings-rgb: 130, 59, 255;
+
+  --text-color: #000000;
+  --text-color-rgb: 0, 0, 0;
+
+  --button-bg: #BB86FC;
+  --button-bg-rgb: 187, 134, 252;
+
+  --button-text: #ffffff;
+  --button-text-rgb: 255, 255, 255;
+
+  --sidebar: #d8cdff;
+  --sidebar-rgb: 216, 205, 255;
+
+  --navbar-bg: #d8cdff;
+  --navbar-bg-rgb: 216, 205, 255;
+
+  --navbar-text: #823bff;
+  --navbar-text-rgb: 130, 59, 255;
+}
+
+[data-theme="dark"] {
+  --page-bg: #000000;
+  --page-bg-rgb: 0, 0, 0;
+
+  --component-bg: #323232;
+  --component-bg-rgb: 50, 50, 50;
+
+  --component-bg2: #BB86FC;
+  --component-bg2-rgb: 187, 134, 252;
+
+  --headings: #BB86FC;
+  --headings-rgb: 187, 134, 252;
+
+  --text-color: #ebebeb;
+  --text-color-rgb: 235, 235, 235;
+
+  --button-bg: #03DAC6;
+  --button-bg-rgb: 3, 218, 198;
+
+  --button-text: #ebebeb;
+  --button-text-rgb: 235, 235, 235;
+
+  --sidebar: #03DAC6;
+  --sidebar-rgb: 3, 218, 198;
+
+  --navbar-bg: #323232;
+  --navbar-bg-rgb: 50, 50, 50;
+
+  --navbar-text: #BB86FC;
+  --navbar-text-rgb: 187, 134, 252;
+}
+
+
+body{
+  min-width: 320px;
+}
