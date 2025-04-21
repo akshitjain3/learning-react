@@ -1,0 +1,110 @@
+.gh-profile-finder-cont {
+    grid-column: span 2;
+    width: 100%;
+    max-height: 900px;
+    padding: 1rem;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--component-bg);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gh-search-cont {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    padding-block: 2rem;
+}
+
+.gh-search-cont input {
+    padding-left: 1rem;
+    height: 50px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid var(--text-color);
+    font-size: 1.5rem;
+}
+
+.gh-search-cont > input:focus {
+    border: 2px solid var(--headings);
+}
+
+.gh-search-cont > button {
+    height: 50px;
+    width: 150px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.5rem;
+    background-color: var(--headings);
+    color: var(--button-text);
+    line-height: 1.5rem;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.loadingButton::after {
+    content: "";
+    right: 1rem;
+    border-radius: 50%;
+    border: 3px solid var(--button-text);
+    border-top: 3px solid transparent;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+.gh-search-status {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    padding: 1rem 0;
+}
+
+.gh-profiles-cont {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 260px);
+    grid-auto-rows: minmax(auto, 380px);
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.gh-header {
+    position: sticky;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gh-header > h1 {
+    color: var(--headings);
+}
+
+.scrollWrapper {
+    width: 90%;
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.scrollIndicator {
+    width: 0;
+    height: 100%;
+    color: rgb(46, 200, 46);
+    transition: width 0.3s ease;
+}

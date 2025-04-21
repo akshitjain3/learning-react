@@ -15,6 +15,7 @@ import OpenModalPopup from "./components/OpenModalPopup/OpenModalPopup";
 import LoginForm from "./components/dummycomponents/LoginForm";
 import SignupForm from "./components/dummycomponents/SignupForm";
 import { AnimatePresence } from "framer-motion";
+import GithubProfileFinder from "./components/githubprofile-finder/GithubProfileFinder";
 
 function App() {
   const [theme, setTheme] = useLocalStorage({ key: "theme", value: "dark" });
@@ -31,6 +32,7 @@ function App() {
     "Image Slider",
     "LoadMore & Scroll Indicator",
     "Tree Menu",
+    "Github Profile Finder",
   ];
 
   const [content, setContent] = useState<JSX.Element | null>(null);
@@ -53,6 +55,7 @@ function App() {
               max={100}
             />
             <TreeView list={treeViewData} />
+            <GithubProfileFinder />
           </div>
         );
         break;
@@ -86,6 +89,10 @@ function App() {
 
       case 6:
         setContent(<TreeView list={treeViewData} />);
+        break;
+
+      case 7:
+        setContent(<GithubProfileFinder />);
         break;
       default:
         break;

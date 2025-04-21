@@ -1,0 +1,34 @@
+.paginator-wrapper {
+    margin: auto;
+    padding-block: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--component-bg);
+    border-radius: 5px;
+    grid-column: 1 / -1;
+    padding-inline: 2rem;
+    height: auto;
+    align-self: start;
+}
+
+.inactive {
+    background-color: lightgray;
+}
+
+.active {
+    cursor: pointer;
+}
+
+.pagination-btn {
+    color: var(--headings);
+    background-color: var(--component-bg);
+    border: 1px solid var(--headings);
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.active-page {
+    background-color: var(--headings);
+    color: var(--component-bg);
+}

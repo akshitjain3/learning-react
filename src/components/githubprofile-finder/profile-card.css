@@ -1,0 +1,44 @@
+.gh-profile-card {
+    border-radius: 20px;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+}
+
+.radiant-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 50%;
+    background-image: linear-gradient(to top, var(--headings) 0%, transparent);
+}
+
+.gh-profile-name {
+    bottom: 8%;
+    left: 6%;
+    color: var(--sidebar);
+    line-height: 1;
+    font-size: 2rem;
+}
+
+.gh-profile-icon-div {
+    background-color: var(--sidebar);
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 8%;
+    right: 6%;
+    cursor: pointer;
+}
+
+.gh-profile-icon {
+    height: 24px;
+    width: 24px;
+    color: var(--headings);
+}
