@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./randomcolor.css";
+import BubblesBackground from "../starry-background/BubblesBackground";
 
 export default function RandomColor() {
   const [colorCategory, setColorCategory] = useState("HEX");
@@ -44,6 +45,7 @@ export default function RandomColor() {
       className="randomColorWrapper"
       style={color ? { backgroundColor: color } : undefined}
     >
+      <BubblesBackground noOfStars={50} />
       <h1>Random Color Generator</h1>
       <fieldset className="colorSelection">
         <legend>Color Type</legend>

@@ -18,6 +18,8 @@
         "spacer spacer"
         "colorInfo colorInfo";
     background-color: var(--component-bg);
+    position: relative;
+    overflow: hidden;
 }
 
 .randomColorWrapper > h1 {
