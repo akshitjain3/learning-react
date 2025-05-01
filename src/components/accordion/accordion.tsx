@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, Fragment } from "react";
 import "./accordion.css";
+import DownArrow from "../../assets/down-arrow.svg";
 
 interface AccordionProps {
   itemsList: { id: number; question: string; answer: string }[];
@@ -57,7 +58,11 @@ export default function Accordion({
                     onClick={() => toggleHidden(item.id)}
                   >
                     <h2>{item.question}</h2>
-                    <span>{item.hidden ? "+" : "-"}</span>
+                    <img
+                      className={item.hidden ? "" : "rotate-180"}
+                      src={DownArrow}
+                      alt="Expand/Collapse icon"
+                    />
                   </div>
                   <p
                     ref={ref}

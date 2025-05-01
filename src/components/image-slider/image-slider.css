@@ -84,6 +84,7 @@
     background-color: var(--component-bg);
     border: 0;
     z-index: 1;
+    cursor: pointer;
 }
 
 .currImg {
@@ -102,6 +103,7 @@
     position: absolute;
     color: var(--headings);
     z-index: 1;
+    cursor: pointer;
 }
 
 .arrow-left {

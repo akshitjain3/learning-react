@@ -16,6 +16,7 @@ import LoginForm from "./components/dummycomponents/LoginForm";
 import SignupForm from "./components/dummycomponents/SignupForm";
 import { AnimatePresence } from "framer-motion";
 import GithubProfileFinder from "./components/githubprofile-finder/GithubProfileFinder";
+import TicTacToe from "./components/tic-tac-toe/TicTacToe";
 
 function App() {
   const [theme, setTheme] = useLocalStorage({ key: "theme", value: "dark" });
@@ -56,6 +57,7 @@ function App() {
             />
             <TreeView list={treeViewData} />
             <GithubProfileFinder />
+            <TicTacToe />
           </div>
         );
         break;
