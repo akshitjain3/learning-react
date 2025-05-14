@@ -17,9 +17,10 @@ import SignupForm from "./components/dummycomponents/SignupForm";
 import { AnimatePresence } from "framer-motion";
 import GithubProfileFinder from "./components/githubprofile-finder/GithubProfileFinder";
 import TicTacToe from "./components/tic-tac-toe/TicTacToe";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 function App() {
   const [theme, setTheme] = useLocalStorage({ key: "theme", value: "dark" });
+  const queryClient = new QueryClient();
   function toggleThemeChange(value: string) {
     if (theme !== value) {
       setTheme(value);
@@ -42,7 +43,7 @@ function App() {
       case 0:
         setContent(
           <div className="mainContainer">
-            <Accordion itemsList={data} multiSelection={false} />
+            <Accordion itemsList={data} multiSelection={true} />
             <RandomColor />
             <StarRating noOfStars={10} />
             <ImageSlider
@@ -127,38 +128,40 @@ function App() {
   }
 
   return (
-    <div className="main" data-theme={theme}>
-      <LightDarkThemeElement
-        toggleThemeChange={toggleThemeChange}
-        theme={theme}
-      />
-      <div className="header">
-        <div className="header-title">Learning React</div>
-        <div className="header-navbar">
-          <CustomNavBar
-            tabsList={["Login", "Signup"]}
-            handleContentChange={handleOpenModal}
-            defaultSelection={false}
-            resetNavBar={resetNavBar}
-          />
+    <QueryClientProvider client={queryClient}>
+      <div className="main" data-theme={theme}>
+        <LightDarkThemeElement
+          toggleThemeChange={toggleThemeChange}
+          theme={theme}
+        />
+        <div className="header">
+          <div className="header-title">Learning React</div>
+          <div className="header-navbar">
+            <CustomNavBar
+              tabsList={["Login", "Signup"]}
+              handleContentChange={handleOpenModal}
+              defaultSelection={false}
+              resetNavBar={resetNavBar}
+            />
+          </div>
         </div>
-      </div>
-      <AnimatePresence>
-        {isModalOpen && (
-          <OpenModalPopup
-            body={modalContent ? modalContent : ""}
-            onClose={onModalClose}
-          />
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {isModalOpen && (
+            <OpenModalPopup
+              body={modalContent ? modalContent : ""}
+              onClose={onModalClose}
+            />
+          )}
+        </AnimatePresence>
 
-      <CustomNavBar
-        tabsList={tabsList}
-        handleContentChange={handleContentChange}
-        defaultSelection={true}
-      />
-      <div className="navbar-content">{content}</div>
-    </div>
+        <CustomNavBar
+          tabsList={tabsList}
+          handleContentChange={handleContentChange}
+          defaultSelection={true}
+        />
+        <div className="navbar-content">{content}</div>
+      </div>
+    </QueryClientProvider>
   );
 }
 

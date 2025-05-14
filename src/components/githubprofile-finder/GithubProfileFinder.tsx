@@ -3,6 +3,7 @@ import "./gpf.css";
 import ProfileCard from "./ProfileCard";
 import CompleteGitHubProfile from "./CompleteGHProfile";
 import CustomPaginator from "../page-navigation/CustomPaginator";
+import { useQuery } from "@tanstack/react-query";
 
 interface GHProfiles {
   login: string;
@@ -31,131 +32,61 @@ export interface CompleteGHProfile {
   company: string;
 }
 
+async function fetchProfiles(
+  query: string,
+  limit: number,
+  page: number
+): Promise<{ items: GHProfiles[]; totalCount: number }> {
+  const response = await fetch(
+    `https://api.github.com/search/users?q=${query}&per_page=${limit}&page=${page}`
+  );
+  if (!response.ok) throw new Error("Error fetching profiles");
+  const data: MainAPIResult = await response.json();
+  if (!data.items || !data.items.length)
+    throw new Error("No profiles match the query.");
+  return {
+    items: data.items.map((entry) => ({
+      login: entry.login,
+      avatar_url: entry.avatar_url,
+      name: entry.login,
+    })),
+    totalCount: data.total_count,
+  };
+}
+
 export default function GithubProfileFinder() {
   const [query, setQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const per_page = 20;
   const page_limit = 10;
   const [page, setPage] = useState(1);
-  const [searchResults, setSearchResults] = useState<GHProfiles[]>([]);
-  const [displayResults, setDisplayResults] = useState<GHProfiles[]>([]);
   const [completeProfile, setCompleteProfile] =
     useState<CompleteGHProfile | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  async function fetchData(url: string): Promise<boolean> {
-    try {
-      const response = await fetch(url);
-      const data: MainAPIResult = await response.json();
 
-      if (!response.ok || !data.items.length) {
-        setError("No profiles match the query.");
-        setSearchResults([]);
-        return false;
-      }
-
-      setSearchResults((prev) => [
-        ...prev,
-        ...data.items.map((entry) => ({
-          login: entry.login,
-          avatar_url: entry.avatar_url,
-          name: entry.login,
-        })),
-      ]);
-      return true;
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      }
-      setSearchResults([]);
-      return false;
-    }
+  async function handleOpenProfile(login: string) {
+    const response = await fetch(`https://api.github.com/users/${login}`);
+    if (!response.ok) throw new Error("Error fetching profile");
+    const data: CompleteGHProfile = await response.json();
+    setCompleteProfile(data);
   }
 
-  async function fetchProfiles(): Promise<boolean> {
-    setLoading(true);
-    setError("");
+  const { data, isError, error, isLoading } = useQuery({
+    queryKey: ["profiles", searchTerm, page],
+    queryFn: () => fetchProfiles(searchTerm, per_page, page),
+    enabled: !!searchTerm,
+    staleTime: 1000 * 60 * 5,
+    placeholderData: (previousData) => previousData,
+  });
 
-    const resultsNeeded = page_limit * per_page;
-
-    if (resultsNeeded <= 100) {
-      const url = `https://api.github.com/search/users?q=${query}&per_page=100`;
-      const ok = await fetchData(url);
-      setLoading(false);
-      return ok;
-    } else {
-      for (let index = 1; index <= Math.ceil(resultsNeeded / 100); index++) {
-        let records = 100;
-        if (index === Math.ceil(resultsNeeded / 100)) {
-          records = resultsNeeded - (index - 1) * 100;
-        }
-
-        const url = `https://api.github.com/search/users?q=${query}&per_page=${records}&page=${
-          index + 1
-        }`;
-        const ok = await fetchData(url);
-
-        if (!ok) {
-          break;
-        }
-      }
-      setLoading(false);
-      return true;
-    }
-  }
-
-  function displayProfiles() {
-    setDisplayResults(
-      searchResults.slice((page - 1) * per_page, page * per_page)
-    );
-  }
   function handlePageChange(page: number) {
     setPage(page);
   }
 
   async function handleOnSearchClick() {
     if (query.trim()) {
-      setSearchResults([]);
-      setDisplayResults([]);
-      setError("");
-    }
-
-    await fetchProfiles();
-  }
-
-  async function handleOpenProfile(login: string) {
-    const url = `https://api.github.com/users/${login}`;
-    setLoading(true);
-    try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch GitHub profile");
-      }
-
-      const data: CompleteGHProfile = await response.json();
-
-      if (data) {
-        setCompleteProfile({
-          login: data.login,
-          name: data.name,
-          avatar_url: data.avatar_url,
-          location: data.location,
-          followers: data.followers,
-          following: data.following,
-          created_at: data.created_at,
-          html_url: data.html_url,
-          public_repos: data.public_repos,
-          blog: data.blog,
-          bio: data.bio,
-          company: data.company,
-        });
-      }
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      }
-    } finally {
-      setLoading(false);
+      setSearchTerm(query.trim());
+      setCompleteProfile(null);
+      setPage(1);
     }
   }
 
@@ -181,24 +112,13 @@ export default function GithubProfileFinder() {
     }
     content_el?.addEventListener("scroll", handleScroll);
     return () => content_el?.removeEventListener("scroll", handleScroll);
-  }, [searchResults, completeProfile]);
+  }, [data, completeProfile]);
 
   useEffect(() => {
-    if (query.trim()) {
-      displayProfiles();
-    }
-
     if (contentDiv.current) {
       contentDiv.current.scrollTop = 0;
     }
-  }, [page]);
-
-  useEffect(() => {
-    if (searchResults.length > 0) {
-      setPage(1);
-      displayProfiles();
-    }
-  }, [searchResults]);
+  }, [page, searchTerm]);
 
   return (
     <div className="gh-profile-finder-cont">
@@ -217,23 +137,25 @@ export default function GithubProfileFinder() {
         />
         <button
           onClick={handleOnSearchClick}
-          className={loading ? "loadingButton" : ""}
+          className={isLoading ? "loadingButton" : ""}
         >
           Search
         </button>
       </div>
-      {loading || error ? (
+      {isLoading || isError ? (
         <div className="gh-search-status">
-          {error ? error : "Please wait, loading results.."}
+          {isError && error instanceof Error
+            ? error.message
+            : "Please wait, loading results.."}
         </div>
       ) : completeProfile ? (
         <CompleteGitHubProfile
           profile={completeProfile}
           onBack={handleOnBack}
         />
-      ) : displayResults.length > 0 ? (
+      ) : data && data.items.length > 0 ? (
         <div ref={contentDiv} className="gh-profiles-cont">
-          {displayResults.map((profile) => (
+          {data.items.map((profile) => (
             <ProfileCard
               key={profile.login}
               onClick={handleOpenProfile}
@@ -244,7 +166,10 @@ export default function GithubProfileFinder() {
           ))}
           <CustomPaginator
             currentPage={page}
-            totalPages={Math.ceil(searchResults.length / per_page)}
+            totalPages={Math.min(
+              Math.ceil(data.totalCount / per_page),
+              page_limit
+            )}
             handleOnClick={handlePageChange}
           />
         </div>

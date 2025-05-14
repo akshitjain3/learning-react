@@ -1,10 +1,10 @@
 .loadMoreMain {
     grid-column: span 2;
-    max-height: 700px;
+    height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 100%;
     background-color: var(--component-bg);
     color: var(--headings);
@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 10px;
     z-index: 2;
 }
@@ -47,7 +47,7 @@
 .loadMoreCont {
     padding: 1rem;
     max-height: 604px;
-    overflow: scroll;
+    overflow: auto;
     background-color: var(--component-bg);
 }
 
